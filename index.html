@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberAudit AI Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chat { width: 400px; height: 400px; border: 1px solid #ccc; overflow-y: scroll; }
+        #user-input { width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>CyberAudit AI Chat</h1>
+    <div id="chat"></div>
+    <input id="user-input" type="text" placeholder="Type your message...">
+    <button id="send-button">Send</button>
+
+    <script>
+        const socket = io();
+
+        document.getElementById('send-button').onclick = function() {
+            const message = document.getElementById('user-input').value;
+            socket.emit('user_message', message);
+            document.getElementById('user-input').value = '';
+        };
+
+        socket.on('bot_response', function(response) {
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div>User: ${response}</div>`;
+            chat.scrollTop = chat.scrollHeight; // Auto scroll to bottom
+        });
+    </script>
+</body>
+</html>

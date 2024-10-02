@@ -1,0 +1,7 @@
+Flask
+Flask-SocketIO
+nltk
+spacy
+pandas
+scikit-learn
+joblib
